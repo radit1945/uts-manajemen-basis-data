@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  postgres_raditya:
+    image: postgres:15
+    container_name: postgres_raditya
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "22002:5432" 
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin_raditya:
+    image: dpage/pgadmin4
+    container_name: pgadmin_raditya
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "44002:80" # 
+    depends_on:
+      - postgres_raditya
+
+volumes:
+  pgdata:
